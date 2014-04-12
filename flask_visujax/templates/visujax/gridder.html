@@ -1,0 +1,43 @@
+{% macro render_html_row(row) %}
+<div class="row">
+{% for col in row.columns %}
+  <div class="{{col.divclass}}">
+  {% for item in col.items %}
+    {% if item | is_bootstrap_row %}
+      {{ render_html_row(item) }}
+    {% else %}
+      {{ item.render_html()|safe }}
+    {% endif %}
+  {% endfor %}
+  </div>
+{% endfor %}
+</div>
+{% endmacro %}
+
+{% macro render_js_row(row) %}
+{% for col in row.columns %}
+  {% for item in col.items %}
+    {% if item | is_bootstrap_row %}
+      {{ render_js_row(item) }}
+    {% else %}
+      {{ item.render_js()|safe }}
+    {% endif %}
+  {% endfor %}
+{% endfor %}
+{% endmacro %}
+
+{% macro render_html(content) %}
+<div class="container-fluid">
+{% for row in content %}
+    {{ render_html_row(row) }}
+{% endfor %}
+</div>
+{% endmacro %}
+
+{% macro render_js(content) %}
+<script type="text/javascript">
+{% for row in content %}
+    {{ render_js_row(row) }}
+{% endfor %}
+</script>
+{% endmacro %}

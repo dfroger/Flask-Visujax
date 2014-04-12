@@ -1,0 +1,23 @@
+{% macro render_bootstrap_row(row) %}
+<div class="row">
+{% for col in row.columns %}
+  <div class="{{col.divclass}}">
+  {% for item in col.items %}
+    {% if item | is_bootstrap_row %}
+      {{ render_bootstrap_row(item) }}
+    {% else %}
+      {{ item.render()|safe }}
+    {% endif %}
+  {% endfor %}
+  </div>
+{% endfor %}
+</div>
+{% endmacro %}
+
+{% macro render_bootstrap_rows(rows) %}
+<div class="container-fluid">
+{% for row in rows %}
+    {{ render_bootstrap_row(row) }}
+{% endfor %}
+</div>
+{% endmacro %}

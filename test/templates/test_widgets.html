@@ -1,0 +1,25 @@
+{% extends "bootstrap/base.html" %}
+{% import "gridder.html" as gridder %}
+
+{% block styles %}
+{{super()}}
+<link rel="stylesheet" type="text/css" 
+   href="{{ url_for('static', filename='jquery.jqplot.css') }}" />
+{% endblock %}
+
+{% block content %}
+{{ gridder.render_bootstrap_rows(bootstrap_rows) }}
+{% endblock %}
+
+{% block scripts %}
+{{super()}}
+
+<script language="javascript" type="text/javascript" 
+    src="{{ url_for('static', filename='jquery.jqplot.js') }}"></script>
+<script type="text/javascript" src="/static/js/sijax/sijax.js"></script>
+<script type="text/javascript"> {{ g.sijax.get_js()|safe }} </script>
+<script type="text/javascript" src="/static/visujax.js"></script>
+
+<script type="text/javascript">
+</script>
+{% endblock %}

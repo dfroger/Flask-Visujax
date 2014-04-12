@@ -1,0 +1,59 @@
+{% macro subplot_form(subplot) %}
+
+<form name="{{ subplot.name }}SubplotForm"
+      id="{{ subplot.name }}SubplotForm"
+      onsubmit="return onSubplotFormSubmit('{{ subplot.name }}SubplotForm')">
+<table class="table">
+<tr>
+    <th> </th>
+    <th colspan="4"> </th>
+    <th> Column </th>
+    <th> Row </th>
+</tr>
+{% for param in subplot.params %}
+    <tr>
+    <th> {{ param.name_human }} </th>
+    {% for value,checked in param.values %}
+        <td> <input type="checkbox" name="{{ param.name }}[]" value="{{ loop.index0 }}" {% if checked %} checked {% endif %}> {{ value }} </td>
+    {% endfor %}
+    {% for number in range(param.values|length, subplot.nchoices) %}
+       <td> </td>
+    {% endfor %}
+    <td> <input type="radio" name="_col" value="{{ param.name }}" {%if param.col %} checked {% endif %}> </td>
+    <td> <input type="radio" name="_row" value="{{ param.name }}" {%if param.row %} checked {% endif %}></td>
+    </tr>
+{% endfor %}
+</table>
+<input type="hidden" name="_maxRows" value="{{ subplot.nrows }}">
+<input type="hidden" name="_maxCols" value="{{ subplot.ncols }}">
+<input type="hidden" name="_maxCurves" value="{{ subplot.ncurves }}">
+{% for param in subplot.params %}
+<input type="hidden" name="_allParamNames[]" value="{{ param.name }}">
+{% endfor %}
+<input type="hidden" name="_name[]" value="{{ subplot.name }}">
+
+<div class="alert alert-danger" name='error_report' style="display: none;">
+<ul>
+</ul>
+</div>
+
+<button type="submit" class="btn btn-default">Update</button>
+
+</form>
+
+{%- endmacro %}
+
+{% macro subplot_placeholder(subplot) %}
+{% for row in range(subplot.nrows) %}
+{% set loop_row = loop %}
+<div class="row">
+{% for col in range(subplot.ncols) %}
+<div class="col-sm-4"> <div id='subplot_placeholder_{{ loop_row.index0 }}_{{ loop.index0 }}' style='height:200px; width:300px;'></div></div>
+{% endfor %}
+</div>
+{% endfor %}
+{%- endmacro %}
+
+{% macro subplot_populate(subplot) %}
+populateSubplotFigs("{{ subplot.name }}", {{ subplot.nrows }}, {{ subplot.ncols }}, {{ subplot.ncurves }} );
+{%- endmacro %}
