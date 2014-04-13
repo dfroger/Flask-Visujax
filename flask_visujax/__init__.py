@@ -10,6 +10,12 @@ class Visujax(object):
             self.init_app(app)
 
     def init_app(self, app):
+
+        @app.template_filter('is_bootstrap_row')
+        def is_bootstrap_row(value):
+            print 'is_bootstrap_row'
+            return isinstance(value,BootstrapRow)
+
         blueprint = Blueprint(
             'visujax',
             __name__,
