@@ -3,6 +3,7 @@ from flask import Blueprint
 from widgets import *
 from response import *
 from bootstraprow import Column, BootstrapRow, Content
+from prettify import prettify
 
 class Visujax(object):
     def __init__(self, app=None):
