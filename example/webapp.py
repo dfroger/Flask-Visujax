@@ -14,10 +14,9 @@ from wtforms.validators import DataRequired
 # object comming form Post, that flask_wtf automatically passed.
 
 from flask_visujax import BootstrapRow, Column, Content, Label, \
-    PlotReplace, Button, BaseResponse
+    PlotReplace, Button, BaseResponse, prettify
 from flask_visujax import Form as WidgetForm
 from util import Master
-from prettify import prettify
 
 path = os.path.join('.', os.path.dirname(__file__), 'static/js/sijax')
 
@@ -29,10 +28,6 @@ app.config['WTF_CSRF_SECRET_KEY'] = 'a random string'
 flask_sijax.Sijax(app)
 flask_visujax.Visujax(app)
 Bootstrap(app)
-
-@app.template_filter('is_bootstrap_row')
-def is_bootstrap_row(value):
-    return isinstance(value,BootstrapRow)
 
 class ControlForm(Form):
     number = IntegerField('Number of seconds', validators=[DataRequired()])
