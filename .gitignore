@@ -1,3 +1,8 @@
 static/js/sijax/
 *.pyc
 .*.swp
+
+example/static
+dist/
+build/
+Flask_Visujax.egg-info/
