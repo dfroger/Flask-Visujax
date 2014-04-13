@@ -19,6 +19,13 @@ setup(
     packages=['flask_visujax'],
     zip_safe=False,
     include_package_data=True,
+    package_data = {
+        'flask_visujax' : [
+            'templates/visujax/*.html',
+            'static/*.js',
+            'static/*.css',
+            ],
+    },
     platforms='any',
     install_requires=[
         'Flask',
